@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="ExerciseOneViewParams">
+    <declare-styleable name="CommonViewParams">
+        <attr name="duration" format="integer"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="Exercise1ViewParams">
         <attr name="color1" format="color"/>
         <attr name="color2" format="color"/>
-        <attr name="duration" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="Exercise2ViewParams">
+        <attr name="main_color" format="color"/>
+        <attr name="circles" format="integer"/>
     </declare-styleable>
 
 </resources>

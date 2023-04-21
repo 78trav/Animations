@@ -19,11 +19,11 @@ import androidx.core.content.withStyledAttributes
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-private const val EXERCISE_ONE_DURATION = 2000
+private const val EXERCISE_1_DURATION = 2000
 private const val DISTANCE_BETWEEN_CIRCLES = 15
 private const val APPROXIMATION_FACTOR = .2f
 
-class Circle(var cx: Int, var cy: Int, var radius: Int, val paint: Paint) {
+class Circle(var cx: Int = 0, var cy: Int = 0, var radius: Int = 0, val paint: Paint = Paint()) {
 
     fun draw(canvas: Canvas) {
         canvas.drawCircle(cx.toFloat(), cy.toFloat(), radius.toFloat(), paint)
@@ -36,7 +36,7 @@ class Exercise1 @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    var duration = EXERCISE_ONE_DURATION
+    var duration = EXERCISE_1_DURATION
     var repeatCount = 1
 
     private var isAnimated = false
@@ -76,10 +76,12 @@ class Exercise1 @JvmOverloads constructor(
     )
 
     init {
-        context.withStyledAttributes(attrs, R.styleable.ExerciseOneViewParams) {
-            c1.paint.color = this.getColor(R.styleable.ExerciseOneViewParams_color1, Color.CYAN)
-            c2.paint.color = this.getColor(R.styleable.ExerciseOneViewParams_color2, Color.MAGENTA)
-            duration = this.getInt(R.styleable.ExerciseOneViewParams_duration, EXERCISE_ONE_DURATION)
+        context.withStyledAttributes(attrs, R.styleable.Exercise1ViewParams) {
+            c1.paint.color = this.getColor(R.styleable.Exercise1ViewParams_color1, Color.CYAN)
+            c2.paint.color = this.getColor(R.styleable.Exercise1ViewParams_color2, Color.MAGENTA)
+        }
+        context.withStyledAttributes(attrs, R.styleable.CommonViewParams) {
+            duration = this.getInt(R.styleable.CommonViewParams_duration, EXERCISE_1_DURATION)
         }
     }
 
@@ -320,7 +322,7 @@ class Exercise1 @JvmOverloads constructor(
             playSequentially(c1anim)
             //playTogether(animationC11)
             addListener(object: Animator.AnimatorListener {
-                var count = repeatCount
+                var count = this@Exercise1.repeatCount
                 override fun onAnimationStart(p0: Animator) {
                 }
                 override fun onAnimationRepeat(p0: Animator) {

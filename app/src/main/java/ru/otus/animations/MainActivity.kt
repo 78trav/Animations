@@ -14,9 +14,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(b.root)
 
         b.figure1.setOnClickListener {
-            b.figure1.repeatCount = b.figure1Repeat.value.toInt()
-            b.figure1.duration = b.figure1Duration.value.toInt() * 1000
+            b.figure1.repeatCount = b.figureRepeat.value.toInt()
+            b.figure1.duration = b.figureDuration.value.toInt() * 1000
             b.figure1.startAnimation()
+        }
+
+        b.figure2.setOnClickListener {
+            b.figure2.repeatCount = b.figureRepeat.value.toInt()
+            b.figure2.duration = b.figureDuration.value.toInt() * 1000
+            b.figure2.startAnimation()
         }
 
     }
