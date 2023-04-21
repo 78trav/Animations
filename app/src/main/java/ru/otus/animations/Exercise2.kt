@@ -36,6 +36,7 @@ class Exercise2  @JvmOverloads constructor(
         context.withStyledAttributes(attrs, R.styleable.Exercise2ViewParams) {
             mainColor = this.getColor(R.styleable.Exercise2ViewParams_main_color, Color.CYAN)
             circlesCount = this.getColor(R.styleable.Exercise2ViewParams_circles, DEFAULT_CIRCLES_COUNT)
+            if (circlesCount !in 3..10) circlesCount = DEFAULT_CIRCLES_COUNT
         }
     }
 
@@ -43,7 +44,8 @@ class Exercise2  @JvmOverloads constructor(
         val c = min(w, h) shr 1
         var r = c
         val d = r / circlesCount
-        //var a = 0
+
+        if (circlesCount !in 3..10) circlesCount = DEFAULT_CIRCLES_COUNT
 
         circles.clear()
 
@@ -60,7 +62,6 @@ class Exercise2  @JvmOverloads constructor(
                 )
             )
             r -= d
-            //a += 255 / circles.size
         }
     }
 
