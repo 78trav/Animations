@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.core.content.withStyledAttributes
+import java.lang.Integer.max
 import kotlin.math.min
 
 private const val EXERCISE_2_DURATION = 2000
@@ -41,19 +42,20 @@ class Exercise2  @JvmOverloads constructor(
     }
 
     private fun setupInitialValues(w: Int, h: Int) {
+
+        if (circlesCount !in 3..10) circlesCount = DEFAULT_CIRCLES_COUNT
+
         val c = min(w, h) shr 1
         var r = c
         val d = r / circlesCount
 
-        if (circlesCount !in 3..10) circlesCount = DEFAULT_CIRCLES_COUNT
-
         circles.clear()
 
-        for (i in 1..circlesCount) {
+        (1..circlesCount).forEach() { _ ->
             circles.add(
                 Circle(
-                    c,
-                    c,
+                    w shr 1,
+                    h shr 1,
                     r,
                     Paint().apply {
                         style = Paint.Style.FILL
@@ -97,9 +99,10 @@ class Exercise2  @JvmOverloads constructor(
 
         val r = min(width - paddingLeft - paddingRight, height - paddingTop - paddingBottom) shr 1
 
-        ValueAnimator.ofInt(0 , r).apply {
+        ValueAnimator.ofInt(0, r).apply {
             duration = this@Exercise2.duration.toLong()
             interpolator = LinearInterpolator()
+            repeatCount = max(this@Exercise2.repeatCount - 1, 0)
             addUpdateListener {
                 circles.forEach { c ->
                     c.radius = if (c.radius + 1 > r) 0 else c.radius + 1
@@ -108,7 +111,6 @@ class Exercise2  @JvmOverloads constructor(
                 invalidate()
             }
             addListener(object: Animator.AnimatorListener {
-                var count = this@Exercise2.repeatCount
                 override fun onAnimationStart(p0: Animator) {
                 }
                 override fun onAnimationRepeat(p0: Animator) {
@@ -116,11 +118,7 @@ class Exercise2  @JvmOverloads constructor(
                 override fun onAnimationCancel(p0: Animator) {
                 }
                 override fun onAnimationEnd(p0: Animator) {
-                    if (count < 2) isAnimated = false
-                    else {
-                        count--
-                        start()
-                    }
+                    isAnimated = false
                 }
             })
             start()
